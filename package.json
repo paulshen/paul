@@ -9,7 +9,7 @@
     "@monaco-editor/react": "^3.7.2",
     "autoprefixer": "^10.1.0",
     "next": "^10.0.3",
-    "postcss": "^8.2.1",
+    "postcss": "^8.2.10",
     "prism-themes": "^1.5.0",
     "prismjs": "^1.23.0",
     "react": "^17.0.1",
