@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.button {
+  @apply bg-transparent rounded-md border border-gray-700 px-2 py-1 text-sm text-gray-700;
+}

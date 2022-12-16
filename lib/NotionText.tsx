@@ -1,7 +1,9 @@
-import React from "react";
 import { Decoration, ExtendedRecordMap } from "notion-types";
 import { formatDate } from "notion-utils";
+import React from "react";
+import { NotionBlock } from "./NotionBlock";
 import { NotionTextAnchor } from "./NotionTextAnchor";
+import { textDecorationsToString } from "./NotionUtils";
 
 function addDashesToUUID(uuid: string) {
   return uuid
@@ -19,11 +21,15 @@ export function NotionText({
   return (
     <>
       {value?.map(([text, decorations], index) => {
-        if (!decorations) {
+        if (decorations === undefined) {
           if (text === ",") {
-            return <span key={index} style={{ padding: "0.5em" }} />;
+            return <span className="p-0.5" key={index} />;
           } else {
-            return <React.Fragment key={index}>{text}</React.Fragment>;
+            return (
+              <React.Fragment key={index}>
+                {text.replaceAll(/ /g, " ")}
+              </React.Fragment>
+            );
           }
         }
 
@@ -36,21 +42,19 @@ export function NotionText({
                 );
 
               case "c":
-                return <code className="notion-inline-code">{element}</code>;
+                return <code className="bg-gray-100 font-mono">{element}</code>;
 
               case "b":
-                return <b>{element}</b>;
+                return <b className="font-semibold">{element}</b>;
 
               case "i":
-                return <em>{element}</em>;
+                return <em className="italic">{element}</em>;
 
               case "s":
                 return <s>{element}</s>;
 
               case "_":
-                return (
-                  <span className="notion-inline-underscore">{element}</span>
-                );
+                return <span className="">{element}</span>;
 
               case "m":
                 // comment / discussion
@@ -78,9 +82,24 @@ export function NotionText({
               case "a": {
                 const v = decorator[1];
                 if (v.startsWith("/")) {
+                  const linkedBlock =
+                    recordMap.block[addDashesToUUID(v.slice(1))].value;
                   return (
                     <NotionTextAnchor
-                      linkedBlock={recordMap.block[addDashesToUUID(v.slice(1))]}
+                      blockId={linkedBlock.id}
+                      paneContent={
+                        <div className="px-4 py-2 sm:px-8 sm:py-4">
+                          <div className="text-xl font-semibold mb-4">
+                            {textDecorationsToString(
+                              linkedBlock.properties.title
+                            )}
+                          </div>
+                          <NotionBlock
+                            blockId={linkedBlock.id}
+                            recordMap={recordMap}
+                          />
+                        </div>
+                      }
                     >
                       {element}
                     </NotionTextAnchor>

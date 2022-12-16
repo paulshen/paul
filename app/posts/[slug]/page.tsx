@@ -1,6 +1,5 @@
-import React from "react";
-import { renderNotionBlock } from "../../../lib/NotionBlockRenderer";
-import { NotionText } from "../../../lib/NotionText";
+import { NotionBlock } from "../../../lib/NotionBlock";
+import { textDecorationsToString } from "../../../lib/NotionUtils";
 import { getPost, getPostDatabase } from "../../data";
 
 export async function generateStaticParams() {
@@ -24,15 +23,12 @@ export default async function PostsPage({
   }
   const { post, recordMap } = await getPost(postId);
   return (
-    <div className="flex justify-center">
-      <div className="max-w-lg text-sm">
-        {post.content.map((childBlock) => {
-          return (
-            <React.Fragment key={childBlock.id}>
-              {renderNotionBlock(childBlock, recordMap)}
-            </React.Fragment>
-          );
-        })}
+    <div className="flex px-6 lg:pl-16">
+      <div className="w-full max-w-lg pt-12 pb-12 max-lg:mx-auto">
+        <div className="text-3xl font-semibold mb-8">
+          {textDecorationsToString(post.Title)}
+        </div>
+        <NotionBlock blockId={postId} recordMap={recordMap} />
       </div>
     </div>
   );
