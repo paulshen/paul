@@ -5,6 +5,16 @@ import { Exercise } from "./Exercise";
 import { HighlightedCode } from "./HighlightedCode";
 import { NotionText } from "./NotionText";
 import { textDecorationsToString } from "./NotionUtils";
+import { TweetEmbed } from "./TweetEmbed";
+
+function BlockIcon({ block }: { block: BaseBlock }) {
+  const pageIcon: string | undefined = block.format?.page_icon;
+  if (pageIcon === undefined) {
+    return null;
+  }
+
+  return <div>{pageIcon}</div>;
+}
 
 function BlockRenderer({
   block,
@@ -129,9 +139,30 @@ function BlockRenderer({
     }
     case "callout": {
       return (
-        <div>
+        <div className="bg-gray-100 p-4 flex gap-4 items-start rounded">
+          <BlockIcon block={block} />
           <NotionText value={block.properties?.title} recordMap={recordMap} />
           {children}
+        </div>
+      );
+    }
+    case "quote": {
+      return (
+        <div className="bg-gray-100 p-4">
+          <NotionText value={block.properties?.title} recordMap={recordMap} />
+        </div>
+      );
+    }
+    case "tweet": {
+      const source =
+        recordMap.signed_urls?.[block.id] ?? block.properties?.source?.[0]?.[0];
+      const id = source.split("?")[0].split("/").pop();
+      if (id === undefined) {
+        return null;
+      }
+      return (
+        <div className="my-4">
+          <TweetEmbed tweetId={id} />
         </div>
       );
     }
