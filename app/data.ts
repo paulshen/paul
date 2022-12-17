@@ -44,19 +44,26 @@ export function processDatabaseItem(
     throw new Error(`missing properties`);
   }
   for (const [key, value] of Object.entries(page.properties)) {
+    const propertyName = collection.schema[key].name;
     switch (collection.schema[key].type) {
       case "text":
       case "title":
-        item[collection.schema[key].name] = value;
+        item[propertyName] = value;
         break;
       case "date":
         const formattedDate = getDateValue(value);
         if (formattedDate?.type === "date") {
           const date = new Date(formattedDate.start_date);
-          item[collection.schema[key].name] = `${
+          item[propertyName] = `${
             MONTHS[date.getMonth()]
           } ${date.getFullYear()}`;
         }
+        break;
+      case "file":
+        item[propertyName] = value[0][1]?.[0][1];
+        break;
+      case "checkbox":
+        item[propertyName] = value[0]?.[0] === "Yes";
         break;
       default:
         console.log(`unsupported schema type: ${collection.schema[key].type}`);
@@ -74,7 +81,8 @@ export async function getPostDatabase(): Promise<PostDatabaseItem[]> {
   return Object.values(recordMap.block)
     .map((block) => block.value)
     .filter((block): block is PageBlock => block?.type === "page")
-    .map((pageBlock: PageBlock) => processDatabaseItem(pageBlock, collection));
+    .map((pageBlock: PageBlock) => processDatabaseItem(pageBlock, collection))
+    .filter((item) => item.Publish);
 }
 
 export async function getPost(id: string): Promise<{
@@ -95,4 +103,14 @@ export async function getPost(id: string): Promise<{
     post,
     recordMap,
   };
+}
+
+export async function getScribblesDatabase(): Promise<PostDatabaseItem[]> {
+  const recordMap = await notion.getPage("6b46257aea3846269127f8990c614400");
+  const collection = Object.values(recordMap.collection)[0].value;
+  // @ts-ignore
+  return Object.values(recordMap.block)
+    .map((block) => block.value)
+    .filter((block): block is PageBlock => block?.type === "page")
+    .map((pageBlock: PageBlock) => processDatabaseItem(pageBlock, collection));
 }

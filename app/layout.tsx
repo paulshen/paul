@@ -1,11 +1,15 @@
 import { PanesLayer } from "../lib/PanesLayer";
+import { Sidebar } from "../lib/Sidebar";
+import { getPostDatabase } from "./data";
 import "./globals.css";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const posts = await getPostDatabase();
+
   return (
     <html lang="en">
       {/*
@@ -14,8 +18,9 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <div className="flex h-screen">
-          <div className="grow overflow-hidden">{children}</div>
+        <div className="flex h-screen overflow-hidden">
+          <Sidebar posts={posts} />
+          <div className="grow overflow-y-auto">{children}</div>
         </div>
         <PanesLayer />
       </body>
