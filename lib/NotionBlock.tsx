@@ -133,7 +133,6 @@ function BlockRenderer({
             />
           );
         }
-        console.log(collection);
       }
       return <div>alias {blockPointerId}</div>;
     }

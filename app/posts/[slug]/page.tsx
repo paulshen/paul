@@ -1,6 +1,6 @@
 import { NotionBlock } from "../../../lib/NotionBlock";
 import { textDecorationsToString } from "../../../lib/NotionUtils";
-import { getPost, getPostDatabase } from "../../data";
+import { getDatabasePage, getPostDatabase, PostDatabaseItem } from "../../data";
 
 export async function generateStaticParams() {
   const posts = await getPostDatabase();
@@ -11,7 +11,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PostsPage({
+export default async function PostPage({
   params,
 }: {
   params: { slug: string };
@@ -22,7 +22,7 @@ export default async function PostsPage({
     return <div>post not found</div>;
   }
 
-  const { post, recordMap } = await getPost(postId);
+  const { post, recordMap } = await getDatabasePage<PostDatabaseItem>(postId);
   return (
     <div className="px-4 lg:pl-16">
       <div className="w-full max-w-lg pt-12 pb-12 max-lg:mx-auto">

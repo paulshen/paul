@@ -4,6 +4,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PostDatabaseItem, ProjectDatabaseItem } from "../app/data";
 import { textDecorationsToString } from "./NotionUtils";
 
 function SidebarLink({
@@ -40,7 +41,7 @@ function TopMenu() {
   );
 }
 
-function PostsList({ posts }: { posts: any[] }) {
+function PostsList({ posts }: { posts: PostDatabaseItem[] }) {
   return (
     <div className="px-2 flex flex-col gap-1 py-2">
       {posts.map((post) => (
@@ -57,7 +58,30 @@ function PostsList({ posts }: { posts: any[] }) {
   );
 }
 
-export function Sidebar({ posts }: { posts: any[] }) {
+function ProjectsList({ projects }: { projects: ProjectDatabaseItem[] }) {
+  return (
+    <div className="px-2 flex flex-col gap-1 py-2">
+      {projects.map((project) => (
+        <SidebarLink href={`/projects/${project.Slug}`} key={project.id}>
+          <div>{textDecorationsToString(project.Name)}</div>
+          {project.Tagline !== undefined ? (
+            <div className="text-xs text-opacity-50 text-gray-600 font-normal">
+              {project.Tagline}
+            </div>
+          ) : null}
+        </SidebarLink>
+      ))}
+    </div>
+  );
+}
+
+export function Sidebar({
+  posts,
+  projects,
+}: {
+  posts: PostDatabaseItem[];
+  projects: ProjectDatabaseItem[];
+}) {
   const pathname = usePathname();
   const segments = useSelectedLayoutSegments();
   const [showCollapsed, setShowCollapsed] = useState(false);
@@ -141,6 +165,8 @@ export function Sidebar({ posts }: { posts: any[] }) {
         </div>
         {segments[0] === "posts" && !forceShowTopMenu ? (
           <PostsList posts={posts} />
+        ) : segments[0] === "projects" && !forceShowTopMenu ? (
+          <ProjectsList projects={projects} />
         ) : (
           <TopMenu />
         )}

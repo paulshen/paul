@@ -2,7 +2,7 @@ import { Inter, Roboto_Mono } from "@next/font/google";
 import classNames from "classnames";
 import { PanesLayer } from "../lib/PanesLayer";
 import { Sidebar } from "../lib/Sidebar";
-import { getPostDatabase } from "./data";
+import { getPostDatabase, getProjectsDatabase } from "./data";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,6 +22,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const posts = await getPostDatabase();
+  const projects = await getProjectsDatabase();
 
   return (
     <html lang="en" className={classNames(inter.variable, robotoMono.variable)}>
@@ -32,7 +33,7 @@ export default async function RootLayout({
       <head />
       <body>
         <div className="flex h-screen overflow-hidden">
-          <Sidebar posts={posts} />
+          <Sidebar posts={posts} projects={projects} />
           <div className="grow overflow-y-auto">{children}</div>
         </div>
         <PanesLayer />

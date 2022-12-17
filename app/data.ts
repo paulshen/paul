@@ -17,6 +17,13 @@ export type ScribbleDatabaseItem = {
   id: string;
   Image: string;
 };
+export type ProjectDatabaseItem = {
+  id: string;
+  Slug: string;
+  Name: Decoration[];
+  URL: Decoration[];
+  Tagline: Decoration[];
+};
 
 const MONTHS = [
   "January",
@@ -87,7 +94,7 @@ export const getPostDatabase = cache(async () => {
     .filter((item) => item.Publish);
 });
 
-export const getPost = cache(async (id: string) => {
+export const getDatabasePage = cache(async <T>(id: string) => {
   const recordMap = await notion.getPage(id);
   const pageBlock = recordMap.block[id].value;
   const collection = Object.values(recordMap.collection)[0].value;
@@ -95,7 +102,7 @@ export const getPost = cache(async (id: string) => {
     throw new Error();
   }
   return {
-    post: processDatabaseItem<PostDatabaseItem>(pageBlock, collection),
+    post: processDatabaseItem<T>(pageBlock, collection),
     recordMap,
   };
 });
@@ -108,5 +115,16 @@ export const getScribblesDatabase = cache(async () => {
     .filter((block): block is PageBlock => block?.type === "page")
     .map((pageBlock: PageBlock) =>
       processDatabaseItem<ScribbleDatabaseItem>(pageBlock, collection)
+    );
+});
+
+export const getProjectsDatabase = cache(async () => {
+  const recordMap = await notion.getPage("e2e9af6c1d7d435ea4f5c5d1074adaf5");
+  const collection = Object.values(recordMap.collection)[0].value;
+  return Object.values(recordMap.block)
+    .map((block) => block.value)
+    .filter((block): block is PageBlock => block?.type === "page")
+    .map((pageBlock: PageBlock) =>
+      processDatabaseItem<ProjectDatabaseItem>(pageBlock, collection)
     );
 });
