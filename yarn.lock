@@ -79,6 +79,11 @@
   "resolved" "https://registry.npmjs.org/@next/env/-/env-13.0.4.tgz"
   "version" "13.0.4"
 
+"@next/font@^13.0.4":
+  "integrity" "sha512-csZhVqe870p7XE03WfbDLzjVwdBAWxe6/lWGQosfqY/XN5tsmfDLpj442veicfCiiuF7/ydSnAAJxH8PQVBVWQ=="
+  "resolved" "https://registry.npmjs.org/@next/font/-/font-13.0.4.tgz"
+  "version" "13.0.4"
+
 "@next/swc-darwin-x64@13.0.4":
   "integrity" "sha512-HK4b2rFiju8d40GTL/jH9U6OQ7BYA2MeEHs7Dm7Rp7kwQtLzP3z6osdQS8er20tIFHDE4b+oVBy03ZUQkHf0Pg=="
   "resolved" "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-13.0.4.tgz"
