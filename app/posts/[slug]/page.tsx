@@ -21,6 +21,7 @@ export default async function PostsPage({
   if (postId === undefined) {
     return <div>post not found</div>;
   }
+
   const { post, recordMap } = await getPost(postId);
   return (
     <div className="px-4 lg:pl-16">

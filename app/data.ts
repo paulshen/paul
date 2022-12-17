@@ -1,22 +1,26 @@
 import { NotionAPI } from "notion-client";
 import {
-  BaseBlock,
   Collection,
   Decoration,
   ExtendedRecordMap,
   PageBlock,
 } from "notion-types";
 import { getDateValue } from "notion-utils";
+import "server-only";
 
-type PostDatabaseItem = {
+export type DatabaseItem = { id: string } & { [key: string]: any };
+
+export type PostDatabaseItem = {
   id: string;
   Slug: string;
   Title: Decoration[];
   Date?: string;
   Publish?: boolean;
 };
-
-export type DatabaseItem = { id: string } & { [key: string]: any };
+export type ScribbleDatabaseItem = {
+  id: string;
+  Image: string;
+};
 
 const MONTHS = [
   "January",
@@ -33,10 +37,10 @@ const MONTHS = [
   "December",
 ];
 
-export function processDatabaseItem(
+export function processDatabaseItem<T>(
   page: PageBlock,
   collection: Collection
-): DatabaseItem {
+): T {
   const item: DatabaseItem = {
     id: page.id,
   };
@@ -74,19 +78,21 @@ export function processDatabaseItem(
 }
 
 const notion = new NotionAPI();
-export async function getPostDatabase(): Promise<PostDatabaseItem[]> {
+
+export async function getPostDatabase() {
   const recordMap = await notion.getPage("d60770573fee487984f182b3a72fa803");
   const collection = Object.values(recordMap.collection)[0].value;
-  // @ts-ignore
   return Object.values(recordMap.block)
     .map((block) => block.value)
     .filter((block): block is PageBlock => block?.type === "page")
-    .map((pageBlock: PageBlock) => processDatabaseItem(pageBlock, collection))
+    .map((pageBlock: PageBlock) =>
+      processDatabaseItem<PostDatabaseItem>(pageBlock, collection)
+    )
     .filter((item) => item.Publish);
 }
 
 export async function getPost(id: string): Promise<{
-  post: PostDatabaseItem & { content: BaseBlock[] };
+  post: PostDatabaseItem;
   recordMap: ExtendedRecordMap;
 }> {
   const recordMap = await notion.getPage(id);
@@ -95,22 +101,19 @@ export async function getPost(id: string): Promise<{
   if (pageBlock.type !== "page") {
     throw new Error();
   }
-  const post = processDatabaseItem(pageBlock, collection);
-  post.content =
-    pageBlock.content?.map((childId) => recordMap.block[childId].value) ?? [];
   return {
-    // @ts-ignore
-    post,
+    post: processDatabaseItem<PostDatabaseItem>(pageBlock, collection),
     recordMap,
   };
 }
 
-export async function getScribblesDatabase(): Promise<PostDatabaseItem[]> {
+export async function getScribblesDatabase() {
   const recordMap = await notion.getPage("6b46257aea3846269127f8990c614400");
   const collection = Object.values(recordMap.collection)[0].value;
-  // @ts-ignore
   return Object.values(recordMap.block)
     .map((block) => block.value)
     .filter((block): block is PageBlock => block?.type === "page")
-    .map((pageBlock: PageBlock) => processDatabaseItem(pageBlock, collection));
+    .map((pageBlock: PageBlock) =>
+      processDatabaseItem<ScribbleDatabaseItem>(pageBlock, collection)
+    );
 }

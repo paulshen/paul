@@ -10,7 +10,6 @@ export default async function ScribblesPage() {
         <div className="aspect-square relative" key={scribble.id}>
           <Image
             src={`https://www.notion.so/image/${encodeURIComponent(
-              // @ts-ignore
               scribble.Image
             )}?table=block&id=${scribble.id}`}
             alt="drawing"
