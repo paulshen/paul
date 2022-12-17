@@ -1,11 +1,7 @@
 import { NotionAPI } from "notion-client";
-import {
-  Collection,
-  Decoration,
-  ExtendedRecordMap,
-  PageBlock,
-} from "notion-types";
+import { Collection, Decoration, PageBlock } from "notion-types";
 import { getDateValue } from "notion-utils";
+import { cache } from "react";
 import "server-only";
 
 export type DatabaseItem = { id: string } & { [key: string]: any };
@@ -79,7 +75,7 @@ export function processDatabaseItem<T>(
 
 const notion = new NotionAPI();
 
-export async function getPostDatabase() {
+export const getPostDatabase = cache(async () => {
   const recordMap = await notion.getPage("d60770573fee487984f182b3a72fa803");
   const collection = Object.values(recordMap.collection)[0].value;
   return Object.values(recordMap.block)
@@ -89,12 +85,9 @@ export async function getPostDatabase() {
       processDatabaseItem<PostDatabaseItem>(pageBlock, collection)
     )
     .filter((item) => item.Publish);
-}
+});
 
-export async function getPost(id: string): Promise<{
-  post: PostDatabaseItem;
-  recordMap: ExtendedRecordMap;
-}> {
+export const getPost = cache(async (id: string) => {
   const recordMap = await notion.getPage(id);
   const pageBlock = recordMap.block[id].value;
   const collection = Object.values(recordMap.collection)[0].value;
@@ -105,9 +98,9 @@ export async function getPost(id: string): Promise<{
     post: processDatabaseItem<PostDatabaseItem>(pageBlock, collection),
     recordMap,
   };
-}
+});
 
-export async function getScribblesDatabase() {
+export const getScribblesDatabase = cache(async () => {
   const recordMap = await notion.getPage("6b46257aea3846269127f8990c614400");
   const collection = Object.values(recordMap.collection)[0].value;
   return Object.values(recordMap.block)
@@ -116,4 +109,4 @@ export async function getScribblesDatabase() {
     .map((pageBlock: PageBlock) =>
       processDatabaseItem<ScribbleDatabaseItem>(pageBlock, collection)
     );
-}
+});
