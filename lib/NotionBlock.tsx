@@ -18,7 +18,7 @@ function BlockRenderer({
   switch (block.type) {
     case "page": {
       return (
-        <div className="text-gray-800 text-sm leading-relaxed">
+        <div className="text-gray-900 text-sm leading-relaxed">
           {block.content?.map((blockId) => (
             <NotionBlock
               blockId={blockId}

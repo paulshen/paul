@@ -20,7 +20,7 @@ function SidebarLink({
     <Link
       href={href}
       className={classNames(
-        "group rounded block px-2 py-2 text-sm max-lg:text-xs font-medium",
+        "group rounded block px-2 py-2 text-sm max-lg:text-xs font-medium text-gray-900",
         isSelected ? "is-selected bg-slate-100" : "hover:bg-gray-50"
       )}
     >
@@ -74,6 +74,13 @@ export function Sidebar({ posts }: { posts: any[] }) {
     setForceShowTopMenu(false);
   }
 
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 100);
+  }, []);
+
   let currentMarker = null;
   switch (segments[0]) {
     case "posts":
@@ -96,8 +103,10 @@ export function Sidebar({ posts }: { posts: any[] }) {
       </button>
       <div
         className={classNames(
-          "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 h-full overflow-y-auto max-md:fixed z-10 max-md:top-0 max-md:bottom-0 max-md:left-0 transform max-md:transition-transform",
-          !showCollapsed ? "max-md:-translate-x-full transform" : ""
+          "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 h-full overflow-y-auto z-10 top-0 bottom-0 left-0 transform",
+          { transition: !isInitialLoad },
+          segments.length === 0 ? "-translate-x-full fixed" : "max-md:fixed",
+          !showCollapsed ? "max-md:-translate-x-full max-md:opacity-50" : ""
         )}
       >
         <div className="pl-4 pr-2 py-3 text-xs flex items-center gap-3 border-b border-gray-100">
