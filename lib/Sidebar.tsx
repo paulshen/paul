@@ -1,7 +1,9 @@
 "use client";
+import { DoubleArrowLeftIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegments } from "next/navigation";
+import { useEffect, useState } from "react";
 import { textDecorationsToString } from "./NotionUtils";
 
 function SidebarLink({
@@ -30,6 +32,7 @@ function SidebarLink({
 function TopMenu() {
   return (
     <div className="px-2 flex flex-col gap-1 py-2">
+      <SidebarLink href="/">home</SidebarLink>
       <SidebarLink href="/posts">posts</SidebarLink>
       <SidebarLink href="/projects">projects</SidebarLink>
       <SidebarLink href="/scribbles">scribbles</SidebarLink>
@@ -55,7 +58,21 @@ function PostsList({ posts }: { posts: any[] }) {
 }
 
 export function Sidebar({ posts }: { posts: any[] }) {
+  const pathname = usePathname();
   const segments = useSelectedLayoutSegments();
+  const [showCollapsed, setShowCollapsed] = useState(false);
+
+  useEffect(() => {
+    setShowCollapsed(false);
+  }, [pathname]);
+  if (segments.length === 1 && segments[0] === "posts" && !showCollapsed) {
+    setShowCollapsed(true);
+  }
+
+  const [forceShowTopMenu, setForceShowTopMenu] = useState(false);
+  if (segments[0] !== "posts" && forceShowTopMenu) {
+    setForceShowTopMenu(false);
+  }
 
   let currentMarker = null;
   switch (segments[0]) {
@@ -65,20 +82,60 @@ export function Sidebar({ posts }: { posts: any[] }) {
     case "projects":
       currentMarker = <Link href="/projects">projects</Link>;
       break;
-    case "scribbles":
-      currentMarker = <Link href="/scribbles">scribbles</Link>;
-      break;
   }
 
   return (
-    <div className="w-80 max-lg:w-64 max-md:hidden flex-shrink-0 border-r border-gray-100 h-full overflow-y-auto">
-      <div className="px-4 py-3 text-xs flex gap-3 border-b border-gray-100">
-        <Link href="/" className="text-gray-400">
-          paul shen
-        </Link>
-        {currentMarker}
+    <>
+      <button
+        onClick={() => {
+          setShowCollapsed((v) => !v);
+        }}
+        className="md:hidden absolute top-2 left-2 p-1 text-gray-400 hover:text-gray-600 transition"
+      >
+        <HamburgerMenuIcon />
+      </button>
+      <div
+        className={classNames(
+          "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 h-full overflow-y-auto max-md:fixed z-10 max-md:top-0 max-md:bottom-0 max-md:left-0 transform max-md:transition-transform",
+          !showCollapsed ? "max-md:-translate-x-full transform" : ""
+        )}
+      >
+        <div className="pl-4 pr-2 py-3 text-xs flex items-center gap-3 border-b border-gray-100">
+          <Link
+            href="/"
+            onClick={(e) => {
+              if (
+                window.innerWidth < 768 &&
+                segments[0] === "posts" &&
+                !forceShowTopMenu
+              ) {
+                setForceShowTopMenu(true);
+                e.preventDefault();
+              }
+            }}
+            className="text-gray-400 hover:text-gray-600 transition"
+          >
+            paul shen
+          </Link>
+          {currentMarker}
+          <div className="grow" />
+          {segments.length === 1 && segments[0] === "posts" ? null : (
+            <button
+              onClick={() => {
+                setShowCollapsed(false);
+              }}
+              className="md:hidden text-gray-400 hover:text-gray-600 transition"
+            >
+              <DoubleArrowLeftIcon />
+            </button>
+          )}
+        </div>
+        {segments[0] === "posts" && !forceShowTopMenu ? (
+          <PostsList posts={posts} />
+        ) : (
+          <TopMenu />
+        )}
       </div>
-      {segments[0] === "posts" ? <PostsList posts={posts} /> : <TopMenu />}
-    </div>
+    </>
   );
 }

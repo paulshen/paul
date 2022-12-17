@@ -5,7 +5,7 @@ export default async function ScribblesPage() {
   const scribbles = await getScribblesDatabase();
 
   return (
-    <div className="px-8 py-8 grid grid-cols-3 max-md:grid-cols-2 gap-2">
+    <div className="px-8 py-8 grid grid-cols-3 max-lg:grid-cols-2 gap-2">
       {scribbles.map((scribble) => (
         <div className="aspect-square relative" key={scribble.id}>
           <Image
