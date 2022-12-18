@@ -66,6 +66,9 @@ export function processDatabaseItem<T>(
           } ${date.getFullYear()}`;
         }
         break;
+      case "url":
+        item[propertyName] = value[0][0];
+        break;
       case "file":
         item[propertyName] = value[0][1]?.[0][1];
         break;
