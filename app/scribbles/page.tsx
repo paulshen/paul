@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { getScribblesDatabase } from "../data";
 
+export const revalidate = 300;
+
 export default async function ScribblesPage() {
   const scribbles = await getScribblesDatabase();
 
