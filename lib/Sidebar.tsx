@@ -89,12 +89,16 @@ export function Sidebar({
   useEffect(() => {
     setShowCollapsed(false);
   }, [pathname]);
-  if (segments.length === 1 && segments[0] === "posts" && !showCollapsed) {
+  if (
+    segments.length === 1 &&
+    ["posts", "projects"].includes(segments[0]) &&
+    !showCollapsed
+  ) {
     setShowCollapsed(true);
   }
 
   const [forceShowTopMenu, setForceShowTopMenu] = useState(false);
-  if (segments[0] !== "posts" && forceShowTopMenu) {
+  if (!["posts", "projects"].includes(segments[0]) && forceShowTopMenu) {
     setForceShowTopMenu(false);
   }
 
@@ -121,10 +125,18 @@ export function Sidebar({
         onClick={() => {
           setShowCollapsed((v) => !v);
         }}
-        className="md:hidden absolute top-5 left-5 p-1 text-gray-400 hover:text-gray-600 transition"
+        className="md:hidden absolute top-5 left-5 p-1 text-gray-400 hover:text-gray-600 transition z-10"
       >
         <HamburgerMenuIcon />
       </button>
+      {showCollapsed ? (
+        <div
+          onClick={() => {
+            setShowCollapsed(false);
+          }}
+          className="fixed top-0 bottom-0 left-0 right-0 md:hidden z-10"
+        />
+      ) : null}
       <div
         className={classNames(
           "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 max-h-screen overflow-y-auto z-10 top-0 bottom-0 left-0 transform",
@@ -133,7 +145,7 @@ export function Sidebar({
           !showCollapsed ? "max-md:-translate-x-full max-md:opacity-50" : ""
         )}
       >
-        <div className="pl-4 pr-2 py-3 text-xs flex items-center gap-3 border-b border-gray-100">
+        <div className="pl-4 pr-2 py-5 text-xs flex items-center gap-3 border-b border-gray-100">
           <Link
             href="/"
             onClick={(e) => {
@@ -152,7 +164,8 @@ export function Sidebar({
           </Link>
           {currentMarker}
           <div className="grow" />
-          {segments.length === 1 && segments[0] === "posts" ? null : (
+          {segments.length === 1 &&
+          ["posts", "projects"].includes(segments[0]) ? null : (
             <button
               onClick={() => {
                 setShowCollapsed(false);
