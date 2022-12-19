@@ -26,8 +26,8 @@ export default async function PostPage({
 
   const { post, recordMap } = await getDatabasePage<PostDatabaseItem>(postId);
   return (
-    <div className="px-4 lg:pl-16">
-      <div className="w-full max-w-lg pt-12 pb-12 max-lg:mx-auto">
+    <div className="px-6 lg:pl-16">
+      <div className="w-full max-w-lg py-16 max-lg:mx-auto">
         <div className="text-3xl font-semibold mb-8 text-gray-900">
           {textDecorationsToString(post.Title)}
         </div>

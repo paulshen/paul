@@ -16,7 +16,7 @@ function MyLink({
 
 export default function Home() {
   return (
-    <div className="min-h-screen px-4">
+    <div className="min-h-screen px-8">
       <div className="w-full max-w-lg pt-32 pb-12 mx-auto text-sm">
         <div className="text-gray-400 mb-8">
           <div>hi! i'm paul.</div>

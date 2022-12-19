@@ -121,15 +121,15 @@ export function Sidebar({
         onClick={() => {
           setShowCollapsed((v) => !v);
         }}
-        className="md:hidden absolute top-2 left-2 p-1 text-gray-400 hover:text-gray-600 transition"
+        className="md:hidden absolute top-5 left-5 p-1 text-gray-400 hover:text-gray-600 transition"
       >
         <HamburgerMenuIcon />
       </button>
       <div
         className={classNames(
-          "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 h-full overflow-y-auto z-10 top-0 bottom-0 left-0 transform",
+          "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 max-h-screen overflow-y-auto z-10 top-0 bottom-0 left-0 transform",
           { transition: !isInitialLoad },
-          segments.length === 0 ? "-translate-x-full fixed" : "max-md:fixed",
+          segments.length === 0 ? "md:-translate-x-full fixed" : "max-md:fixed",
           !showCollapsed ? "max-md:-translate-x-full max-md:opacity-50" : ""
         )}
       >
