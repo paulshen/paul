@@ -34,7 +34,7 @@ export default async function RootLayout({
       */}
       <head />
       <body>
-        <div className="flex overflow-hidden">
+        <div className="flex h-full w-full min-h-screen">
           <Sidebar posts={posts} projects={projects} />
           <div className="grow max-h-screen overflow-y-auto">{children}</div>
         </div>

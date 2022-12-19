@@ -15,6 +15,7 @@ export default async function Head({ params }: { params: { slug: string } }) {
       <title>
         {postName !== undefined ? `${postName} | paul shen` : "paul shen"}
       </title>
+      <meta content="width=device-width, initial-scale=1" name="viewport" />
     </>
   );
 }
