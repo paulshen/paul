@@ -151,6 +151,7 @@ export function Sidebar({
             onClick={(e) => {
               if (
                 window.innerWidth < 768 &&
+                segments.length > 2 &&
                 segments[0] === "posts" &&
                 !forceShowTopMenu
               ) {

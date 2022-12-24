@@ -22,14 +22,16 @@ export default function Home() {
           <div>hi! i'm paul.</div>
           <div>i'll find something to put here.</div>
         </div>
-        <div>
-          <MyLink href="/posts">posts</MyLink>
-        </div>
-        <div>
-          <MyLink href="/projects">projects</MyLink>
-        </div>
-        <div>
-          <MyLink href="/scribbles">scribbles</MyLink>
+        <div className="flex flex-col gap-1">
+          <div>
+            <MyLink href="/posts">posts</MyLink>
+          </div>
+          <div>
+            <MyLink href="/projects">projects</MyLink>
+          </div>
+          <div>
+            <MyLink href="/scribbles">scribbles</MyLink>
+          </div>
         </div>
       </div>
     </div>
