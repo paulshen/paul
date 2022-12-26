@@ -139,7 +139,7 @@ export function Sidebar({
       ) : null}
       <div
         className={classNames(
-          "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 max-h-screen overflow-y-auto z-10 top-0 bottom-0 left-0 transform",
+          "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 max-h-screen overflow-y-auto z-10 top-0 bottom-0 left-0 transform transition",
           { transition: !isInitialLoad },
           segments.length === 0 ? "md:-translate-x-full fixed" : "max-md:fixed",
           !showCollapsed ? "max-md:-translate-x-full max-md:opacity-50" : ""

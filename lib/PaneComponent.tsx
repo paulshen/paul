@@ -109,7 +109,7 @@ export const PaneComponent = observer(
       >
         <div
           {...bindDrag()}
-          className="h-6 flex-shrink-0 bg-gray-700 touch-none cursor-grab flex items-center px-1 justify-end"
+          className="h-8 flex-shrink-0 bg-gray-700 touch-none cursor-grab flex items-center px-2"
           ref={headerRef}
         >
           <button
