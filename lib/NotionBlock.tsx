@@ -16,6 +16,33 @@ function BlockIcon({ block }: { block: BaseBlock }) {
   return <div>{pageIcon}</div>;
 }
 
+// https://github.com/NotionX/react-notion-x/blob/3aef81f18d79dfa5c86a27bf3934d13c77664323/packages/react-notion-x/src/utils.ts#L66
+const youtubeDomains = new Set([
+  "youtu.be",
+  "youtube.com",
+  "www.youtube.com",
+  "youtube-nocookie.com",
+  "www.youtube-nocookie.com",
+]);
+export const getYoutubeId = (url: string): string | null => {
+  try {
+    const { hostname } = new URL(url);
+    if (!youtubeDomains.has(hostname)) {
+      return null;
+    }
+    const regExp =
+      /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/i;
+
+    const match = url.match(regExp);
+    if (match && match[2].length == 11) {
+      return match[2];
+    }
+  } catch {
+    // ignore invalid urls
+  }
+  return null;
+};
+
 function BlockRenderer({
   block,
   recordMap,
@@ -170,6 +197,29 @@ function BlockRenderer({
       return (
         <div className="my-4">
           <TweetEmbed tweetId={id} />
+        </div>
+      );
+    }
+    case "video": {
+      const source =
+        recordMap.signed_urls?.[block.id] ?? block.properties?.source?.[0]?.[0];
+      const youtubeVideoId = getYoutubeId(source);
+      if (youtubeVideoId !== null) {
+        return (
+          <div className="my-4">
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen={true}
+              className="w-full aspect-video"
+            ></iframe>
+          </div>
+        );
+      }
+      return (
+        <div className="my-4">
+          <video src={source} controls={true} playsInline={true} />
         </div>
       );
     }
