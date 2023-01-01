@@ -33,22 +33,8 @@ export default async function ProjectPage({
   return (
     <div className="px-6 lg:pl-16">
       <div className="w-full max-w-lg pt-16 pb-24 max-lg:mx-auto">
-        <div className="mb-8">
-          <div className="text-3xl font-semibold text-gray-900">
-            {textDecorationsToString(project.Name)}
-          </div>
-          {project.URL?.length > 0 ? (
-            <div className="mt-4">
-              <a
-                href={project.URL}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block px-3 py-1 border border-gray-500 rounded"
-              >
-                {"visit ->"}
-              </a>
-            </div>
-          ) : null}
+        <div className="text-3xl font-semibold text-gray-900 mb-8">
+          {textDecorationsToString(project.Name)}
         </div>
         <NotionBlock blockId={projectId} recordMap={recordMap} />
       </div>

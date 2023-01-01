@@ -44,7 +44,7 @@ function BlockRenderer({
         return <div className=""> </div>;
       }
       return (
-        <div className="my-4">
+        <div className="whitespace-pre-wrap my-4">
           <NotionText value={block.properties.title} recordMap={recordMap} />
         </div>
       );
