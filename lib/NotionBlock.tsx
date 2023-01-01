@@ -72,12 +72,20 @@ function BlockRenderer({
           <ol start={start}>{content}</ol>
         );
 
-      const output =
+      let output =
         block.properties !== undefined ? (
-          <li>
+          <li className="py-px">
             <NotionText value={block.properties.title} recordMap={recordMap} />
           </li>
         ) : null;
+      if (block.content !== undefined) {
+        output = (
+          <>
+            {output}
+            {wrapList(children)}
+          </>
+        );
+      }
       const isTopLevel =
         block.type !== recordMap.block[block.parent_id]?.value?.type;
       return isTopLevel ? wrapList(output) : output;
