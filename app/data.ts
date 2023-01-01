@@ -21,7 +21,7 @@ export type ProjectDatabaseItem = {
   id: string;
   Slug: string;
   Name: Decoration[];
-  URL: Decoration[];
+  URL: string;
   Tagline: Decoration[];
 };
 
@@ -105,7 +105,7 @@ export const getDatabasePage = cache(async <T>(id: string) => {
     throw new Error();
   }
   return {
-    post: processDatabaseItem<T>(pageBlock, collection),
+    item: processDatabaseItem<T>(pageBlock, collection),
     recordMap,
   };
 });

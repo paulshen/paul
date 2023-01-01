@@ -6,7 +6,7 @@ export default async function Head({ params }: { params: { slug: string } }) {
   const postId = posts.find((p) => p.Slug[0][0] === params.slug)?.id;
   let postName: string | undefined;
   if (postId !== undefined) {
-    const { post } = await getDatabasePage<PostDatabaseItem>(postId);
+    const { item: post } = await getDatabasePage<PostDatabaseItem>(postId);
     postName = textDecorationsToString(post.Title);
   }
 

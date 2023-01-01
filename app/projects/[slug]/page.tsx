@@ -28,14 +28,27 @@ export default async function ProjectPage({
     return <div>project not found</div>;
   }
 
-  const { post, recordMap } = await getDatabasePage<ProjectDatabaseItem>(
-    projectId
-  );
+  const { item: project, recordMap } =
+    await getDatabasePage<ProjectDatabaseItem>(projectId);
   return (
     <div className="px-6 lg:pl-16">
       <div className="w-full max-w-lg pt-16 pb-24 max-lg:mx-auto">
-        <div className="text-3xl font-semibold mb-8 text-gray-900">
-          {textDecorationsToString(post.Name)}
+        <div className="mb-8">
+          <div className="text-3xl font-semibold text-gray-900">
+            {textDecorationsToString(project.Name)}
+          </div>
+          {project.URL?.length > 0 ? (
+            <div className="mt-4">
+              <a
+                href={project.URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block px-3 py-1 border border-gray-500 rounded"
+              >
+                {"visit ->"}
+              </a>
+            </div>
+          ) : null}
         </div>
         <NotionBlock blockId={projectId} recordMap={recordMap} />
       </div>

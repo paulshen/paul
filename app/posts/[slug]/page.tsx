@@ -24,7 +24,7 @@ export default async function PostPage({
     return <div>post not found</div>;
   }
 
-  const { post, recordMap } = await getDatabasePage<PostDatabaseItem>(postId);
+  const { item: post, recordMap } = await getDatabasePage<PostDatabaseItem>(postId);
   return (
     <div className="px-6 lg:pl-24">
       <div className="w-full max-w-lg pt-16 pb-24 max-lg:mx-auto">
