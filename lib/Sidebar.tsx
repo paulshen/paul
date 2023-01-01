@@ -88,6 +88,7 @@ export function Sidebar({
 
   useEffect(() => {
     setShowCollapsed(false);
+    setForceShowTopMenu(false);
   }, [pathname]);
   if (
     segments.length === 1 &&
@@ -139,9 +140,8 @@ export function Sidebar({
       ) : null}
       <div
         className={classNames(
-          "w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 max-h-screen overflow-y-auto z-10 top-0 bottom-0 left-0 transform transition",
+          "fixed flex flex-col w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 z-10 top-0 bottom-0 left-0 transform transition",
           { transition: !isInitialLoad },
-          segments.length === 0 ? "md:-translate-x-full fixed" : "max-md:fixed",
           !showCollapsed ? "max-md:-translate-x-full max-md:opacity-50" : ""
         )}
       >
@@ -149,12 +149,7 @@ export function Sidebar({
           <Link
             href="/"
             onClick={(e) => {
-              if (
-                window.innerWidth < 768 &&
-                segments.length > 2 &&
-                segments[0] === "posts" &&
-                !forceShowTopMenu
-              ) {
+              if (segments.length >= 2 && !forceShowTopMenu) {
                 setForceShowTopMenu(true);
                 e.preventDefault();
               }
@@ -177,13 +172,15 @@ export function Sidebar({
             </button>
           )}
         </div>
-        {segments[0] === "posts" && !forceShowTopMenu ? (
-          <PostsList posts={posts} />
-        ) : segments[0] === "projects" && !forceShowTopMenu ? (
-          <ProjectsList projects={projects} />
-        ) : (
-          <TopMenu />
-        )}
+        <div className="grow overflow-auto">
+          {segments[0] === "posts" && !forceShowTopMenu ? (
+            <PostsList posts={posts} />
+          ) : segments[0] === "projects" && !forceShowTopMenu ? (
+            <ProjectsList projects={projects} />
+          ) : (
+            <TopMenu />
+          )}
+        </div>
       </div>
     </>
   );

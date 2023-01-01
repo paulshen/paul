@@ -34,10 +34,8 @@ export default async function RootLayout({
       */}
       <head />
       <body>
-        <div className="flex h-full w-full min-h-screen">
-          <Sidebar posts={posts} projects={projects} />
-          <div className="grow max-h-screen overflow-y-auto">{children}</div>
-        </div>
+        <Sidebar posts={posts} projects={projects} />
+        <div className="pl-80 max-lg:pl-64 max-md:pl-0">{children}</div>
         <PanesLayer />
       </body>
     </html>
