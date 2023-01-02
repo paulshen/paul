@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { Decoration, ExtendedRecordMap } from "notion-types";
 import { formatDate } from "notion-utils";
 import React from "react";
@@ -28,7 +27,7 @@ export function NotionText({
           } else {
             return (
               <React.Fragment key={index}>
-                {text.replaceAll(/ /g, " ")}
+                {text.replaceAll(/ /g, " ").replaceAll("→", "->")}
               </React.Fragment>
             );
           }
@@ -107,18 +106,7 @@ export function NotionText({
                   );
                 }
                 return (
-                  <a
-                    href={v}
-                    className={classNames(
-                      typeof element === "object" &&
-                        element != null &&
-                        "props" in element &&
-                        typeof element.props.children === "string" &&
-                        element.props.children.trim().endsWith("->")
-                        ? "hover:underline"
-                        : "underline"
-                    )}
-                  >
+                  <a href={v} className="underline">
                     {element}
                   </a>
                 );
