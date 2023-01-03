@@ -113,10 +113,18 @@ export function Sidebar({
   let currentMarker = null;
   switch (segments[0]) {
     case "posts":
-      currentMarker = <Link href="/posts">posts</Link>;
+      currentMarker = (
+        <Link href="/posts" className="font-medium">
+          posts
+        </Link>
+      );
       break;
     case "projects":
-      currentMarker = <Link href="/projects">projects</Link>;
+      currentMarker = (
+        <Link href="/projects" className="font-medium">
+          projects
+        </Link>
+      );
       break;
   }
 
