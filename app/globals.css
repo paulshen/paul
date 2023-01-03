@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .button {
-  @apply bg-transparent rounded-md border border-gray-700 px-2 py-1 text-sm text-gray-800;
+  @apply bg-transparent rounded-md border border-neutral-700 px-2 py-1 text-sm text-neutral-800;
 }

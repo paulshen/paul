@@ -18,7 +18,7 @@ export function NotionTextAnchor({
         openPane(blockId, paneContent);
         e.preventDefault();
       }}
-      className="underline decoration-dashed decoration-1 decoration-gray-600 underline-offset-2 hover:decoration-gray-700"
+      className="underline decoration-dashed decoration-1 decoration-neutral-600 underline-offset-2 hover:decoration-neutral-700"
     >
       {children}
     </a>

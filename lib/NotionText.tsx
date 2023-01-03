@@ -42,7 +42,7 @@ export function NotionText({
                 );
 
               case "c":
-                return <code className="bg-gray-100 font-mono">{element}</code>;
+                return <code className="bg-neutral-100 font-mono">{element}</code>;
 
               case "b":
                 return <b className="font-semibold">{element}</b>;

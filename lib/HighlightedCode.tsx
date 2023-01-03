@@ -14,7 +14,7 @@ export function HighlightedCode({
 }) {
   const prismLanguage = languages[language];
   return (
-    <pre className="p-2 md:p-4 bg-gray-800 text-gray-200 rounded text-xs overflow-auto leading-normal">
+    <pre className="p-2 md:p-4 bg-neutral-800 text-neutral-200 rounded text-xs overflow-auto leading-normal">
       {prismLanguage !== undefined ? (
         <code
           dangerouslySetInnerHTML={{

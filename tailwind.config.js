@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const tailwindColors = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -15,6 +16,8 @@ module.exports = {
         mono: ["var(--font-roboto-mono)", ...defaultTheme.fontFamily.mono],
       },
       colors: {
+        neutral: tailwindColors.gray,
+        accent: tailwindColors.slate,
         tan: "#f8f3e6",
       },
     },

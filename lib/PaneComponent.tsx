@@ -32,13 +32,13 @@ function PaneResizers({
         {...bindDrag("right")}
         className="absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize touch-none group"
       >
-        <div className="group-hover:opacity-20 opacity-0 absolute top-0 bottom-0 right-0 w-px bg-gray-800 transition" />
+        <div className="group-hover:opacity-20 opacity-0 absolute top-0 bottom-0 right-0 w-px bg-neutral-800 transition" />
       </div>
       <div
         {...bindDrag("bottom")}
         className="absolute bottom-0 left-0 right-0 h-2 cursor-ns-resize touch-none group"
       >
-        <div className="group-hover:opacity-20 opacity-0 absolute bottom-0 left-0 right-0 h-px bg-gray-800 transition" />
+        <div className="group-hover:opacity-20 opacity-0 absolute bottom-0 left-0 right-0 h-px bg-neutral-800 transition" />
       </div>
       <div
         {...bindDrag("bottom-right")}
@@ -109,7 +109,7 @@ export const PaneComponent = observer(
       >
         <div
           {...bindDrag()}
-          className="h-8 flex-shrink-0 bg-gray-700 touch-none cursor-grab flex items-center px-2"
+          className="h-8 flex-shrink-0 bg-neutral-800 touch-none cursor-grab flex items-center px-2"
           ref={headerRef}
         >
           <button

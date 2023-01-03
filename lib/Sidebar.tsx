@@ -21,8 +21,8 @@ function SidebarLink({
     <Link
       href={href}
       className={classNames(
-        "group rounded block px-2 py-2 text-sm max-lg:text-xs font-medium text-gray-900",
-        isSelected ? "is-selected bg-slate-100" : "hover:bg-gray-50"
+        "group rounded block px-2 py-2 text-sm max-lg:text-xs font-medium text-neutral-900",
+        isSelected ? "is-selected bg-accent-100" : "hover:bg-neutral-50"
       )}
     >
       {children}
@@ -48,7 +48,7 @@ function PostsList({ posts }: { posts: PostDatabaseItem[] }) {
         <SidebarLink href={`/posts/${post.Slug}`} key={post.id}>
           <div>{textDecorationsToString(post.Title)}</div>
           {post.Date !== undefined ? (
-            <div className="text-xs text-opacity-50 text-gray-600 font-normal">
+            <div className="text-xs text-opacity-50 text-neutral-600 font-normal">
               {post.Date}
             </div>
           ) : null}
@@ -65,7 +65,7 @@ function ProjectsList({ projects }: { projects: ProjectDatabaseItem[] }) {
         <SidebarLink href={`/projects/${project.Slug}`} key={project.id}>
           <div>{textDecorationsToString(project.Name)}</div>
           {project.Tagline !== undefined ? (
-            <div className="text-xs text-opacity-50 text-gray-600 font-normal">
+            <div className="text-xs text-opacity-50 text-neutral-600 font-normal">
               {project.Tagline}
             </div>
           ) : null}
@@ -134,7 +134,7 @@ export function Sidebar({
         onClick={() => {
           setShowCollapsed((v) => !v);
         }}
-        className="md:hidden absolute top-5 left-5 p-1 text-gray-400 hover:text-gray-600 transition z-10"
+        className="md:hidden absolute top-5 left-5 p-1 text-neutral-400 hover:text-neutral-600 transition z-10"
       >
         <HamburgerMenuIcon />
       </button>
@@ -148,12 +148,12 @@ export function Sidebar({
       ) : null}
       <div
         className={classNames(
-          "fixed flex flex-col w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-gray-100 z-10 top-0 bottom-0 left-0 transform transition",
+          "fixed flex flex-col w-80 bg-white max-lg:w-64 flex-shrink-0 border-r border-neutral-100 z-10 top-0 bottom-0 left-0 transform transition",
           { transition: !isInitialLoad },
           !showCollapsed ? "max-md:-translate-x-full max-md:opacity-50" : ""
         )}
       >
-        <div className="pl-4 pr-2 py-5 text-xs flex items-center gap-3 border-b border-gray-100">
+        <div className="pl-4 pr-2 py-5 text-xs flex items-center gap-3 border-b border-neutral-100">
           <Link
             href="/"
             onClick={(e) => {
@@ -162,7 +162,7 @@ export function Sidebar({
                 e.preventDefault();
               }
             }}
-            className="text-gray-400 hover:text-gray-600 transition"
+            className="text-neutral-400 hover:text-neutral-600 transition"
           >
             paul shen
           </Link>
@@ -174,7 +174,7 @@ export function Sidebar({
               onClick={() => {
                 setShowCollapsed(false);
               }}
-              className="md:hidden text-gray-400 hover:text-gray-600 transition"
+              className="md:hidden text-neutral-400 hover:text-neutral-600 transition"
             >
               <DoubleArrowLeftIcon />
             </button>

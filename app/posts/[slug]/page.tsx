@@ -28,7 +28,7 @@ export default async function PostPage({
   return (
     <div className="px-6 lg:pl-24">
       <div className="w-full max-w-lg pt-16 pb-24 max-lg:mx-auto">
-        <div className="text-3xl font-semibold mb-8 text-gray-900">
+        <div className="text-3xl font-semibold mb-8 text-neutral-900">
           {textDecorationsToString(post.Title)}
         </div>
         <NotionBlock blockId={postId} recordMap={recordMap} />

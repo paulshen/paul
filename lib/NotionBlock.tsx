@@ -55,7 +55,7 @@ function BlockRenderer({
   switch (block.type) {
     case "page": {
       return (
-        <div className="text-gray-900 text-sm leading-relaxed">
+        <div className="text-neutral-900 text-sm leading-relaxed">
           {block.content?.map((blockId) => (
             <NotionBlock
               blockId={blockId}
@@ -173,7 +173,7 @@ function BlockRenderer({
     }
     case "callout": {
       return (
-        <div className="bg-gray-100 p-4 flex gap-4 items-start rounded">
+        <div className="bg-neutral-100 p-4 flex gap-4 items-start rounded">
           <BlockIcon block={block} />
           <NotionText value={block.properties?.title} recordMap={recordMap} />
           {children}
@@ -182,7 +182,7 @@ function BlockRenderer({
     }
     case "quote": {
       return (
-        <div className="bg-gray-100 p-4">
+        <div className="bg-neutral-100 p-4">
           <NotionText value={block.properties?.title} recordMap={recordMap} />
         </div>
       );

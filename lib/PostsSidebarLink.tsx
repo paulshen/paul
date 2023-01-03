@@ -14,7 +14,7 @@ export function PostsSidebarLink({ post }: { post: any }) {
       href={postPath}
       className={classNames(
         "rounded block px-2 py-2",
-        isSelected ? "bg-sky-800 text-white" : "hover:bg-gray-100"
+        isSelected ? "bg-sky-800 text-white" : "hover:bg-neutral-100"
       )}
     >
       <div className="text-sm max-lg:text-xs font-medium">
@@ -24,7 +24,7 @@ export function PostsSidebarLink({ post }: { post: any }) {
         <div
           className={classNames(
             "text-xs text-opacity-50",
-            isSelected ? "text-white" : "text-gray-600"
+            isSelected ? "text-white" : "text-neutral-600"
           )}
         >
           {post.Date}

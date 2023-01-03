@@ -33,7 +33,7 @@ export default async function ProjectPage({
   return (
     <div className="px-6 lg:pl-16">
       <div className="w-full max-w-lg pt-16 pb-24 max-lg:mx-auto">
-        <div className="text-3xl font-semibold text-gray-900 mb-8">
+        <div className="text-3xl font-semibold text-neutral-900 mb-8">
           {textDecorationsToString(project.Name)}
         </div>
         <NotionBlock blockId={projectId} recordMap={recordMap} />
