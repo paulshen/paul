@@ -54,8 +54,8 @@ export const PaneComponent = observer(
     const headerRef = useRef<HTMLDivElement | null>(null);
     const [dimensionsMobx] = useState(() =>
       observable({
-        width: Math.min(512, window.innerWidth - 128),
-        height: Math.min(448, window.innerHeight - 64),
+        width: Math.max(Math.min(512, window.innerWidth - 128), 320),
+        height: Math.max(Math.min(448, window.innerHeight - 64), 256),
       })
     );
     const [positionMobx] = useState(() =>
