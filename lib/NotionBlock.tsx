@@ -205,10 +205,14 @@ function BlockRenderer({
         recordMap.signed_urls?.[block.id] ?? block.properties?.source?.[0]?.[0];
       const youtubeVideoId = getYoutubeId(source);
       if (youtubeVideoId !== null) {
+        const params = new URLSearchParams(source.split("?")[1]);
+        const startTime = params.get("t");
         return (
           <div className="my-4">
             <iframe
-              src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+              src={`https://www.youtube.com/embed/${youtubeVideoId}${
+                startTime !== null ? `?t=${startTime}` : ""
+              }`}
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen={true}
